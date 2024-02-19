@@ -64,7 +64,8 @@ document.getElementById('buy-tickets').addEventListener('click', function() {
         }
     } else {
         event.target.classList.remove('selected', 'bg-green-400', 'text-white');
-        
+        const selectedButtonText = event.target.innerText;
+        removeSeatInfo(selectedButtonText);
     }
 
     const selectedCount = document.querySelectorAll('.selected').length;
@@ -77,6 +78,14 @@ document.getElementById('buy-tickets').addEventListener('click', function() {
     applyCouponButton.disabled = selectedCount < maxSeatsAllowed;
 }
 
+// remove seat
+function removeSeatInfo(seatID) {
+  const divToRemove = document.getElementById(`${seatID}-div`);
+  if (divToRemove) {
+      divToRemove.parentNode.removeChild(divToRemove);
+  }
+}
+
 // Append seat info
 function insertSeatInfo(seatID){
   const content1 = seatID;
@@ -84,11 +93,11 @@ const content2 = 'Economy';
 const content3 = '550';
 
 const htmlContent = `
-  <div class="flex justify-between mt-6 mb-6 font-semibold">
-    <p>${content1}</p>
-    <p>${content2}</p>
-    <p>${content3}</p>
-  </div>
+   <div class="flex justify-between mt-6 mb-6 font-semibold" id="${seatID}-div">
+            <p>${content1}</p>
+            <p>${content2}</p>
+            <p>${content3}</p>
+        </div>
 `;
 
 const seatInfoDiv = document.getElementById('seat-info');
