@@ -46,12 +46,41 @@ document.getElementById('buy-tickets').addEventListener('click', function() {
   //   });
   // });
 
+// Get the input fields and the purchaseTicket button
+const nameInput = document.getElementById('name');
+const phoneNumberInput = document.getElementById('phone');
+const purchaseTicketButton = document.getElementById('purchase');
+
+// Function to validate phone number format (11 digits)
+function isValidPhoneNumber(phoneNumber) {
+    return /^\d{11}$/.test(phoneNumber);
+}
+
+// Function to check if the purchase ticket button should be enabled
+function updatePurchaseTicketButton() {
+    // Get the selected seat count
+    const selectedCount = document.querySelectorAll('.selected').length;
+
+    // Check if the name input is not empty and the phone number is valid
+    const isNameValid = nameInput.value.trim() !== '';
+    const isPhoneNumberValid = isValidPhoneNumber(phoneNumberInput.value);
+
+    // Enable the purchase ticket button if conditions are met
+    purchaseTicketButton.disabled = !(selectedCount > 0 && isNameValid && isPhoneNumberValid);
+}
+
+// Add event listeners to name and phone number inputs to validate and update the purchase ticket button
+nameInput.addEventListener('input', updatePurchaseTicketButton);
+phoneNumberInput.addEventListener('input', updatePurchaseTicketButton);
+
+
 
 
   function seatSelect(event) {
     const selectedSeats = document.querySelectorAll('.selected');
     const maxSeatsAllowed = 4;
     const applyCouponButton = document.getElementById('apply-coupon');
+    const purchaseTicket = document.getElementById("purchase");
 
     if (!event.target.classList.contains('selected')) {
         if (selectedSeats.length < maxSeatsAllowed) {
@@ -76,6 +105,7 @@ document.getElementById('buy-tickets').addEventListener('click', function() {
     
     // Enable or disable apply coupon button based on the number of selected seats
     applyCouponButton.disabled = selectedCount < maxSeatsAllowed;
+    
 }
 
 // remove seat
