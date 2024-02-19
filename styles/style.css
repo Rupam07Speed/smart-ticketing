@@ -7,3 +7,8 @@
 .font-inter {
   font-family: "Inter", sans-serif;
 }
+
+.vertical-line {
+  border-left: 2px dashed rgba(3, 7, 18, 0.3);
+  height: 90%;
+}
